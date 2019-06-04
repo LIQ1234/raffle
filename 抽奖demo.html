@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>抽奖</title>
+    <style type="text/css">
+        
+    </style>
+</head>
+<body>
+    <h1>抽奖</h3>
+    <div class="addpeople">
+        <p>添加抽奖名单</p>
+        <input type="" name="" id="addpeople" placeholder="添加抽奖名单">
+        <button id="addbtn" onclick="add()">添加</button>
+    </div>
+    <div>
+        <h3>抽奖名单</h3>
+        <div id="names"></div>
+    </div>
+    <div>
+        <h2>中奖者</h2>
+        <h3 id="winname">ssss</h3>
+        <button id="start" onclick="start()">开始</button>
+        <button id="stop" onclick="stop()">停止</button>
+    </div>
+</body>
+<script>
+    var nameslist=['李一','王二','张三','武四','刘五'],timer,
+        addpeople=document.getElementById('addpeople'),
+        names=document.getElementById('names'),
+        winname=document.getElementById('winname'),
+        addbtn=document.getElementById('addbtn'),
+        startbtn=document.getElementById('start'),
+        stopbtn=document.getElementById('stop');
+
+    showNames()
+    function add(){
+        if(!addpeople.value){
+            return alert('请输入要添加的名字')
+        }
+        nameslist.push(addpeople.value)
+        names.innerHTML=""
+        showNames()
+        localStorage.setItem("nameslist",JSON.stringify(nameslist))
+        addpeople.value=""
+    }
+    function showNames(){
+        for (var i = 0; i < nameslist.length; i++) {
+            names.innerHTML+='<p>'+nameslist[i]+'</p>'
+        }
+    }
+    function start(){
+        var i=0,len=nameslist.length;
+        timer=setInterval(function(){
+            if(i>len-1){
+                i=0
+            }
+            winname.innerText=nameslist[i++]
+        },100)
+    }
+    function stop(){
+        clearInterval(timer)
+        alert('恭喜'+winname.innerText+'中奖')
+    }
+</script>
+</html>
