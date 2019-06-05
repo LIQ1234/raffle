@@ -7,6 +7,13 @@
         body{
             text-align: center;
         }
+        #names{
+            overflow: hidden;
+        }
+        #names p{
+            width: 50%;
+            float: left;
+        }
     </style>
 </head>
 <body>
@@ -17,25 +24,27 @@
         <button id="addbtn" onclick="add()">添加</button>
     </div>
     <div>
-        <h3>抽奖名单</h3>
+        <h3 id="namslen">抽奖名单</h3>
         <div id="names"></div>
     </div>
     <div>
         <h2>中奖者</h2>
-        <h3 id="winname">ssss</h3>
+        <h3 id="winname"></h3>
         <button id="start" onclick="start()">开始</button>
         <button id="stop" onclick="stop()">停止</button>
     </div>
 </body>
 <script>
-    var nameslist=['李一','王二','张三','武四','刘五'],timer,
+    var nameslist=JSON.parse(localStorage.getItem("nameslist")),timer,
         addpeople=document.getElementById('addpeople'),
+        namslen=document.getElementById('namslen'),
         names=document.getElementById('names'),
         winname=document.getElementById('winname'),
         addbtn=document.getElementById('addbtn'),
         startbtn=document.getElementById('start'),
         stopbtn=document.getElementById('stop');
 
+        if(!nameslist) nameslist=[]
     showNames()
     function add(){
         if(!addpeople.value){
@@ -48,6 +57,7 @@
         addpeople.value=""
     }
     function showNames(){
+        namslen.innerText='抽奖名单，共'+nameslist.length+'人';
         for (var i = 0; i < nameslist.length; i++) {
             names.innerHTML+='<p>'+nameslist[i]+'</p>'
         }
